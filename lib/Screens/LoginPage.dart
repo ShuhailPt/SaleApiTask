@@ -7,11 +7,13 @@ import '../Controller.dart';
 import 'HomePage.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+   LoginPage({Key? key}) : super(key: key);
+
+  final CounterController counterController = Get.put(CounterController());
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(Controller());
+
 
     var widthh =MediaQuery.of(context).size.width;
     var heighth =MediaQuery.of(context).size.height;
@@ -59,7 +61,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 120,20,80),
+                padding: const EdgeInsets.fromLTRB(20, 130,20,120),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -83,65 +85,65 @@ class LoginPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Bwhite,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: const Color(0xffE6E6E6))
+                        border: Border.all(color:lineColor)
                       ),
-                      child: const Column(
+                      child:  Column(
                         children: [
                           TextField(
+                            controller: counterController.cUsername,
                             decoration: InputDecoration(
-                              prefixIcon: ImageIcon(AssetImage("assets/user.png"),color: Color(0xff0A9EF3),size: 26,),
+                              prefixIcon: ImageIcon(const AssetImage("assets/user.png"),color: blue,size: 26,),
                               labelText: 'Username',
                               border: InputBorder.none,
                             ),
-                            // controller: usernameController, // Use TextEditingController
                           ),
-                          Divider(color:Color(0xffE6E6E6) ,),
+                          Divider(color:lineColor ,),
                           TextField(
-                            inputFormatters: [
 
-                            ],
-                            obscureText: true,
+                            controller: counterController.cPassword,
+                            obscureText: counterController.visivility,
                             decoration: InputDecoration(
-                              prefixIcon: ImageIcon(AssetImage("assets/key.png"),color: Color(0xff0A9EF3),),
-                              labelText: 'Password',
-                              border: InputBorder.none,
-                              suffixIcon: Icon(Icons.visibility_outlined,color: Color(0xff0A9EF3),)
+                                prefixIcon: ImageIcon(AssetImage("assets/key.png"),color:blue,),
+                                labelText: 'Password',
+                                border: InputBorder.none,
+                                suffixIcon: IconButton(
+                                  icon: Icon(Icons.visibility_outlined,color:blue,),
+                                  onPressed: () {
+                                    counterController.visible(!counterController.visivility);
+                                  },
+                                )
 
                             ),
-                            // controller: passwordController, // Use TextEditingController
-                          ),
+                          )
+
+
+
                         ],
                       ),
                     ),
                     const SizedBox(height: 29,),
-                    const Text(
+                    Text(
                         "Forgotten Password?",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
-                          color: Color(0xff0A9EF3)
+                          color: blue
                         )
                     ),
 
                     const SizedBox(height: 15.0),
 
-                    ElevatedButton(
+                     counterController.loader?CircularProgressIndicator():ElevatedButton(
 
                         style:ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff0E75F4),
+                            backgroundColor: blue,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                             maximumSize: const Size(130,50),
                         ),
 
                         onPressed: (){
-
-                          controller.ssss();
-
-
-
+                          counterController.loginForm(counterController.cUsername.text.toString(),counterController.cPassword.text.toString());
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
-
-                          Get.to(HomePage());
                         }, child: const Center(
                           child: Row(
                             children: [
@@ -161,7 +163,7 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(bottom: 40),
                 child: Column(
                   children: [
@@ -175,7 +177,7 @@ class LoginPage extends StatelessWidget {
                     Text(
                         "Sign up now!",
                         style: TextStyle(
-                          color: Color(0xff0A9EF3),
+                          color: blue,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                         )

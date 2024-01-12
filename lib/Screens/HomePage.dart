@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:test_vikn/MyColors.dart';
 
 import '../Controller.dart';
 
 class HomePage extends StatelessWidget {
    HomePage({Key? key}) : super(key: key);
 
-  final Controller myController = Get.put(Controller());
-
+   final CounterController counterController = Get.put(CounterController());
   @override
   Widget build(BuildContext context) {
 
@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
         IconButton(
-          icon: Icon(Icons.add,color: Color(0xff0A9EF3),size: 32,),
+          icon: Icon(Icons.add,color:blue,size: 32,),
           onPressed: () {
 
           },
@@ -34,16 +34,15 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            color: Color(0xffE6E6E6),
+            color: conWhite,
             child: TextField(
               decoration: InputDecoration(
                 prefix: Text("  "),
-                focusColor: Color(0xffB4B4B4),
+                focusColor: hintText,
                 labelText: '   Search',labelStyle: TextStyle(color: Colors.black38 ),
-                suffixIcon: Icon(Icons.search_outlined,color: Color(0xffB4B4B4),size: 30,),
+                suffixIcon: Icon(Icons.search_outlined,color:hintText,size: 30,),
                 border: InputBorder.none,
               ),
-              // controller: usernameController, // Use TextEditingController
             ),
           ),
     SizedBox(height: 10,),
@@ -52,7 +51,6 @@ class HomePage extends StatelessWidget {
 
           separatorBuilder:(BuildContext context,int index) {
 
-            print(myController.invoiceList.length.toString()+"sDBsd");
 
             return Divider(
               thickness: 1,
@@ -62,7 +60,7 @@ class HomePage extends StatelessWidget {
 
             );
           } ,
-          itemCount: myController.invoiceList.length,
+          itemCount: counterController.invoiceList.length,
           itemBuilder: (context, index) {
 
             return Padding(
@@ -72,45 +70,49 @@ class HomePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                          "#Invoice No",
+                      Obx(() => Text(
+                          counterController.invoiceList[index].voucherNo ,
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                           )
-                      ),
-                      Text(
-                          "Pending",
+                      ),),
+                      Obx(() =>  Text(
+                          counterController.invoiceList[index].status ,
                           style: TextStyle(
                             color: Colors.red,
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                           )
-                      ),
+                      ),)
+
+
                     ],),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Customer Name",
+                      Obx(() => Text(
+            counterController.invoiceList[index].customerName,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
-                      ),
-                      RichText(
-                          text: const TextSpan(
+                      ),),
+                      Obx(() => RichText(
+                          text:TextSpan(
                               text: "SAR.",
                               style: TextStyle(
-                                  color: Color(0xff888888),
+                                  color: richText,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14),
-                              children: [
+                              children:  [
                                 TextSpan(
-                                    text: "10,000.00",
+                                    text: counterController.invoiceList[index].grandTotalRounded.toString(),
                                     style:
                                     TextStyle(color: Colors.black, fontSize: 16))
-                              ])),
+                              ])),)
+
+
                       // Text(
                       //     "SAR. 10,000.00",
                       //     style: TextStyle(

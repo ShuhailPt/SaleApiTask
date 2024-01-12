@@ -1,24 +1,43 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'ModelClass.dart';
-import 'package:http/http.dart' as http;
+import 'Screens/HomePage.dart';
 
-class Controller extends GetxController{
 
-  // List<Invoice> invoiceList=[];
-  List invoiceList =<Invoice>[].obs;
 
-  ssss() async {
-    print("helloo suhaolll");
+
+class CounterController extends GetxController {
+  var count = 0.obs;
+
+
+  void increment() {
+    count++;
+  }
+  var invoiceList =<Invoice>[].obs;
+
+ TextEditingController cUsername=TextEditingController();
+ TextEditingController cPassword=TextEditingController();
+ bool loader=false;
+
+
+  loginForm(String username,String password) async {
+    loader =true;
+    print(cUsername.text.toString()+"nnnnnnnn");
+    print(cPassword.text.toString()+"nnnnnnnn");
+
+
     // Login API endpoint
     final loginUrl = 'https://api.accounts.vikncodes.com/api/v1/users/login';
-    final username = 'Rabeeh@vk';
-    final password = 'Rabeeh@000';
+    // final username = 'Rabeeh@vk';
+    // final password = 'Rabeeh@000';
     final isMobile = true;
 
     // Sale list API endpoint
@@ -29,7 +48,7 @@ class Controller extends GetxController{
 
     // Check if login was successful
     if (loginResponse.statusCode == 200) {
-      log(loginResponse.body.toString());
+      log(loginResponse.body.toString()+"lllll");
 
       final accessToken = jsonDecode(loginResponse.body)['data']['access'];
 
@@ -41,21 +60,18 @@ class Controller extends GetxController{
         final saleListResponse = await getSaleList(accessToken, saleListUrl);
 
         if (saleListResponse.statusCode == 200) {
-          // Handle the sale list response accordingly
-          print('Sale list response: ${saleListResponse.body}');
+
+
         } else {
-          // Handle sale list request errors
-          print('Error fetching sale list. Status Code: ${saleListResponse.statusCode}');
-          print('Response: ${saleListResponse.body}');
+
         }
       } else {
-        print('Access token is null. Unable to make sale list request.');
+
       }
     } else {
       // Handle login errors
       print('Login failed. Status Code: ${loginResponse.statusCode}');
       print('Response: ${loginResponse.body}');
-
     }
   }
 
@@ -107,7 +123,9 @@ class Controller extends GetxController{
         Map<String, dynamic> parsedJson = jsonDecode(response.body);
 
         List<dynamic> dataList = parsedJson['data'];
-        invoiceList = dataList.map((json) => Invoice.fromJson(json)).toList();
+        invoiceList.value = dataList.map((json) => Invoice.fromJson(json)).toList();
+
+        print(invoiceList.length.toString()+"llllllllll");
 
 
 
@@ -124,7 +142,7 @@ class Controller extends GetxController{
 
 
 
-        print("wiseeeeeeeeeeeeeeeeeeee");
+        print("suhaaaaaaaaaaail");
         print(response.body.toString()+"helloo");
         print("suhaaaaaaaaaaail");
 
@@ -134,6 +152,13 @@ class Controller extends GetxController{
       throw Exception('Error during sale list request: $e');
     }
 
+    loader=false;
+    Get.to(HomePage());
+
+  }
+  bool visivility=true;
+  void visible(bool visible){
+    visivility=visible;
 
   }
 }
