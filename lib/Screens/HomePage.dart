@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test_vikn/MyColors.dart';
 
-import '../Controller.dart';
+import '../controllers/Controller.dart';
 
 class HomePage extends StatelessWidget {
    HomePage({Key? key}) : super(key: key);

@@ -8,8 +8,8 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'ModelClass.dart';
-import 'Screens/HomePage.dart';
+import '../models/ModelClass.dart';
+import '../Screens/HomePage.dart';
 
 
 

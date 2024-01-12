@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:test_vikn/MyColors.dart';
 
-import '../Controller.dart';
+import '../controllers/Controller.dart';
 import 'HomePage.dart';
 
 class LoginPage extends StatelessWidget {
